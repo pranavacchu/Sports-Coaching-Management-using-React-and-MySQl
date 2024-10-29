@@ -1,0 +1,143 @@
+/* General Layout */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevents scrolling */
+}
+
+.login-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh; /* Full viewport height to prevent scrolling */
+  overflow: hidden; /* Prevent any scrollbars from appearing */
+  background-color: #f9f9f9;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Form Styles */
+.login-form {
+  width: 35%;
+  padding: 50px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: auto;
+}
+
+.form-title {
+  font-size: 2.5rem;
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.form-subtitle {
+  color: #777;
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
+}
+
+.sign-in-btn, .player-btn {
+  width: 100%;
+  padding: 14px 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sign-in-btn {
+  background: linear-gradient(135deg, #007bff, #00d4ff);
+  color: #fff;
+  margin-bottom: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 123, 255, 0.4);
+}
+
+.sign-in-btn:hover {
+  background: linear-gradient(135deg, #0069d9, #00b7e5);
+}
+
+.player-btn {
+  background-color: #e0f2ff;
+  color: #007bff;
+  margin-bottom: 30px;
+}
+
+.player-btn:hover {
+  background-color: #d1ecf9;
+}
+
+.separator {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 20px;
+}
+
+.signup-text {
+  margin-top: 20px;
+  font-size: 0.95rem;
+  color: #777;
+}
+
+.signup-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+}
+
+/* Image Banner */
+.login-banner {
+  width: 60%;
+  height: 100vh; /* Full viewport height to prevent scrolling */
+  background-color: #007bff; /* Fallback background in case image doesn't load */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0 ;
+  overflow: hidden;
+}
+
+.banner-image {
+  max-width: 110%;
+  max-height: 110%;
+  object-fit: cover; /* Ensures the image fits without distorting the aspect ratio */
+  border-radius: 0 12px 12px 0;
+}
+.error-message {
+  color: red;        /* Text color */
+  margin-top: 10px; /* Spacing above the message */
+  font-size: 14px;  /* Font size for visibility */
+}
+.signup-text {
+  margin-top: 5px;  /* Adjust this value to move it higher or lower */
+  font-size: 14px;    /* Font size for better visibility */
+}
+

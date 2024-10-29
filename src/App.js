@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import CoachSignupForm from './CoachSignupForm';
+import CoachLogin from './CoachLogin';
+import CoachDashboard from './CoachDashboard';
+import CreateTeamForm from './CreateTeamForm'; // Import the new component
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/signup-coach" element={<CoachSignupForm />} />
+          <Route path="/coach-login" element={<CoachLogin />} />
+          <Route path="/coach-dashboard" element={<CoachDashboard />} />
+          <Route path="/create-team" element={<CreateTeamForm />} /> {/* Add this route */}
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
