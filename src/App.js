@@ -8,7 +8,6 @@ import LoginSignup from './login-signup-component';
 import PlayerDashboard from './player-dashboard';
 import TrainingSessionForm from './TrainingSessionForm';
 
-
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
   const playerId = localStorage.getItem('playerId');
@@ -36,7 +35,8 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/" element={<Navigate to="/player-auth" replace />} />
+          {/* Redirect root URL to /coach-login */}
+          <Route path="/" element={<Navigate to="/coach-login" replace />} />
           <Route
             path="/training-sessions"
             element={

@@ -28,6 +28,10 @@ const CoachDashboard = () => {
   });
   const [updateError, setUpdateError] = useState('');
   const [updateSuccess, setUpdateSuccess] = useState('');
+  const [showPlayersModal, setShowPlayersModal] = useState(false);
+  const [showSessionsModal, setShowSessionsModal] = useState(false);
+  const [playersData, setPlayersData] = useState([]);
+  const [sessionsData, setSessionsData] = useState([]);
 
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -41,7 +45,7 @@ const CoachDashboard = () => {
         }
 
         const response = await axios.get(`http://localhost:5000/api/coach-dashboard/${coachId}`);
-        
+
         // Set initial form values with current coach data
         setUpdateForm({
           name: response.data.name || '',
@@ -77,7 +81,29 @@ const CoachDashboard = () => {
       [name]: value
     }));
   };
+  const handleViewAllPlayers = async () => {
+    try {
+      const coachId = localStorage.getItem('coachId');
+      const response = await axios.get(`http://localhost:5000/api/coach-players/${coachId}`);
+      setPlayersData(response.data);
+      setShowPlayersModal(true);
+    } catch (err) {
+      console.error('Error fetching players:', err);
+      setError('Failed to load players data');
+    }
+  };
 
+  const handleViewAllSessions = async () => {
+    try {
+      const coachId = localStorage.getItem('coachId');
+      const response = await axios.get(`http://localhost:5000/api/coach-sessions/${coachId}`);
+      setSessionsData(response.data);
+      setShowSessionsModal(true);
+    } catch (err) {
+      console.error('Error fetching sessions:', err);
+      setError('Failed to load sessions data');
+    }
+  };
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
     setUpdateError('');
@@ -203,9 +229,9 @@ const CoachDashboard = () => {
 
             <div className="form-actions">
               <button type="submit" className="update-button">Update Account</button>
-              <button 
-                type="button" 
-                className="cancel-button" 
+              <button
+                type="button"
+                className="cancel-button"
                 onClick={() => setShowSettingsModal(false)}
               >
                 Cancel
@@ -288,6 +314,77 @@ const CoachDashboard = () => {
       </div>
     );
   };
+  const PlayersModal = ({ players, onClose }) => {
+    return (
+      <div className="modal-overlay">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h2>Your Players</h2>
+            <button className="modal-close" onClick={onClose}>&times;</button>
+          </div>
+          <div className="modal-body">
+            {players.map(player => (
+              <div key={player.id} className="player-card">
+                <h3>{player.name}</h3>
+                <div className="player-details">
+                  <p><strong>Age:</strong> {player.age}</p>
+                  <p><strong>Gender:</strong> {player.gender}</p>
+                  <p><strong>Email:</strong> {player.email}</p>
+                  <p><strong>Contact:</strong> {player.contact_number}</p>
+                  <p><strong>Team:</strong> {player.team_name || 'No team assigned'}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="modal-footer">
+            <button className="back-button" onClick={onClose}>Back</button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const SessionsModal = ({ sessions, onClose }) => {
+    return (
+      <div className="modal-overlay">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h2>Your Sessions</h2>
+            <button className="modal-close" onClick={onClose}>&times;</button>
+          </div>
+          <div className="modal-body">
+            {sessions.map(session => (
+              <div key={session.id} className="session-card">
+                <div className="session-date-container">
+                  <div className="session-month">
+                    {new Date(session.session_date).toLocaleString('default', { month: 'short' })}
+                  </div>
+                  <div className="session-day">
+                    {new Date(session.session_date).getDate()}
+                  </div>
+                </div>
+                <div className="session-details">
+                  <div className="session-time">
+                    {new Date(`2000-01-01T${session.session_time}`).toLocaleTimeString([], {
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
+                  </div>
+                  <div className="session-player-name">
+                    Player: {session.player_name}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="modal-footer">
+            <button className="back-button" onClick={onClose}>Back</button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
 
   if (loading) return (
     <div className="loading-container">
@@ -332,8 +429,12 @@ const CoachDashboard = () => {
         <button className="action-button view-teams" onClick={handleViewAllTeams}>
           View All Teams
         </button>
-        <button className="action-button view-players">View All Players</button>
-        <button className="action-button view-sessions">Sessions & Schedule</button>
+        <button className="action-button view-players" onClick={handleViewAllPlayers}>
+          View All Players
+        </button>
+        <button className="action-button view-sessions" onClick={handleViewAllSessions}>
+          Sessions & Schedule
+        </button>
       </div>
 
       {showTeamsModal && (
@@ -348,6 +449,18 @@ const CoachDashboard = () => {
         <DeleteConfirmationModal
           onClose={() => setShowDeleteModal(false)}
           onConfirm={handleDeleteAccount}
+        />
+      )}
+      {showPlayersModal && (
+        <PlayersModal
+          players={playersData}
+          onClose={() => setShowPlayersModal(false)}
+        />
+      )}
+      {showSessionsModal && (
+        <SessionsModal
+          sessions={sessionsData}
+          onClose={() => setShowSessionsModal(false)}
         />
       )}
 

@@ -209,6 +209,139 @@ app.get('/api/player-teams/:playerId', async (req, res) => {
       res.status(500).json({ error: 'Error fetching dashboard data' });
     }
   });
+  app.put('/api/update-player/:playerId', async (req, res) => {
+    const { name, email, age, gender, contact_number, currentPassword, newPassword } = req.body;
+
+    try {
+        // Check if player exists
+        const [player] = await connection.promise().query(
+            'SELECT password FROM players WHERE id = ?',
+            [req.params.playerId]
+        );
+
+        if (player.length === 0) {
+            return res.status(404).json({ error: 'Player not found' });
+        }
+
+        // If changing password, verify current password
+        if (newPassword) {
+            if (!currentPassword) {
+                return res.status(400).json({ error: 'Current password is required to set new password' });
+            }
+
+            const passwordMatch = await bcrypt.compare(currentPassword, player[0].password);
+            if (!passwordMatch) {
+                return res.status(401).json({ error: 'Current password is incorrect' });
+            }
+        }
+
+        // Prepare update data
+        const updateData = {
+            name,
+            email,
+            age,
+            gender,
+            contact_number
+        };
+
+        // If new password provided, hash it
+        if (newPassword) {
+            const hashedPassword = await bcrypt.hash(newPassword, 10);
+            updateData.password = hashedPassword;
+        }
+
+        // Update player
+        await connection.promise().query(
+            'UPDATE players SET ? WHERE id = ?',
+            [updateData, req.params.playerId]
+        );
+
+        res.json({ message: 'Account updated successfully',updatedName: name });
+    } catch (error) {
+        console.error('Error updating player:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+// Delete player account
+app.delete('/api/delete-player/:playerId', async (req, res) => {
+    try {
+        const [result] = await connection.promise().query(
+            'DELETE FROM players WHERE id = ?',
+            [req.params.playerId]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Player not found' });
+        }
+
+        res.json({ message: 'Account deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting player:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+// Get all players for a coach
+app.get('/api/coach-players/:coachId', async (req, res) => {
+    try {
+      const [players] = await connection.promise().query(
+        `SELECT DISTINCT 
+          p.id, 
+          p.name, 
+          p.email,
+          (
+            SELECT GROUP_CONCAT(t.team_name)
+            FROM teams t
+            WHERE t.player_id = p.id AND t.coach_id = ?
+          ) as team_names,
+          (
+            SELECT COUNT(*)
+            FROM sessions s
+            WHERE s.player_id = p.id AND s.coach_id = ?
+          ) as total_sessions
+        FROM players p
+        JOIN teams t ON p.id = t.player_id
+        WHERE t.coach_id = ?`,
+        [req.params.coachId, req.params.coachId, req.params.coachId]
+      );
+      
+      // Process the team_names string into an array
+      players.forEach(player => {
+        if (player.team_names) {
+          player.team_names = player.team_names.split(',');
+        } else {
+          player.team_names = [];
+        }
+      });
+  
+      res.json(players);
+    } catch (error) {
+      console.error('Error fetching coach players:', error);
+      res.status(500).json({ error: 'Error fetching players' });
+    }
+  });
+  
+  // Get all sessions for a coach
+  app.get('/api/coach-sessions/:coachId', async (req, res) => {
+    try {
+      const [sessions] = await connection.promise().query(
+        `SELECT 
+          s.*,
+          p.name as player_name,
+          t.team_name
+        FROM sessions s
+        JOIN players p ON s.player_id = p.id
+        LEFT JOIN teams t ON s.player_id = t.player_id AND t.coach_id = s.coach_id
+        WHERE s.coach_id = ?
+        ORDER BY s.session_date, s.session_time`,
+        [req.params.coachId]
+      );
+      res.json(sessions);
+    } catch (error) {
+      console.error('Error fetching coach sessions:', error);
+      res.status(500).json({ error: 'Error fetching sessions' });
+    }
+  });
 const PORT = 5000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
