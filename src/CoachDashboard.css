@@ -307,189 +307,380 @@
   display: flex;
   justify-content: flex-end;
 }
-
-.back-button {
-  background: linear-gradient(90deg, #0f0145, #2575fc);
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: opacity 0.2s ease;
-}
-
-.back-button:hover {
-  opacity: 0.9;
-}
-/* Delete Account Button Styles */
-.delete-account-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 0.5rem 1rem;
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease;
-}
-
-.delete-account-button:hover {
-  background-color: #c82333;
-}
-
-/* Modal Footer Button Styles */
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  padding: 1.5rem;
-  border-top: 1px solid #eee;
-}
-
-.cancel-button {
-  padding: 0.5rem 1rem;
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease;
-}
-
-.cancel-button:hover {
-  background-color: #5a6268;
-}
-
-.delete-button {
-  padding: 0.5rem 1rem;
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.2s ease;
-}
-
-.delete-button:hover {
-  background-color: #c82333;
-}
-
-/* Loading Spinner Styles */
-.loading-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
-
-.loading-spinner {
-  width: 50px;
-  height: 50px;
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #3498db;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 1rem;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-/* Add these styles to your existing CoachDashboard.css */
-
+/* Adjust Settings and Delete buttons */
 .settings-button {
   position: absolute;
-  top: 20px;
-  left: 20px;
-  padding: 0.5rem;
-  background-color: #f8f9fa;
-  border: 1px solid #dee2e6;
-  border-radius: 50%;
+  top: 10px;
+  left: 10px;
+  font-size: 14px;
+  padding: 6px 12px;
+  background-color: #007BFF;
+  color: white;
+  border-radius: 5px;
+  border: none;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
+  transition: background-color 0.3s;
 }
 
 .settings-button:hover {
-  background-color: #e9ecef;
-  transform: rotate(45deg);
+  background-color: #737475;
 }
 
-.settings-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.form-group label {
-  font-weight: 500;
-  color: #333;
-}
-
-.form-group input {
-  padding: 0.5rem;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
-  font-size: 1rem;
-}
-
-.form-group input:focus {
-  outline: none;
-  border-color: #0066cc;
-  box-shadow: 0 0 0 2px rgba(0,102,204,0.2);
-}
-
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.update-button {
-  padding: 0.5rem 1rem;
-  background: linear-gradient(90deg, #0f0145, #2575fc);
+.delete-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 14px;
+  padding: 6px 12px;
+  background-color: #FF4D4D;
   color: white;
+  border-radius: 5px;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: opacity 0.2s ease;
+  transition: background-color 0.3s;
 }
 
-.update-button:hover {
-  opacity: 0.9;
+.delete-button:hover {
+  background-color: #cc0000;
+}
+/* Add these more specific styles to override conflicting CSS */
+
+/* Container needs relative positioning for absolute buttons */
+.dashboard-container {
+  position: relative !important;
+  padding-top: 4rem !important; /* Add space for the buttons */
 }
 
-.success-message {
-  background-color: #d4edda;
-  color: #155724;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  text-align: center;
-  font-weight: bold;
+/* Settings button - top left */
+.settings-button {
+  position: absolute !important;
+  top: 1rem !important;
+  left: 1rem !important;
+  background-color: white !important;
+  color: #64748b !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 0.5rem !important;
+  padding: 0.75rem !important;
+  cursor: pointer !important;
+  z-index: 100 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.2s ease !important;
+  width: auto !important; /* Override any fixed width */
+  min-width: auto !important;
 }
 
-/* Ensure modal content scrolls properly on smaller screens */
+.settings-button:hover {
+  background-color: #f8fafc !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Delete button - top right */
+.delete-account-button {
+  position: absolute !important;
+  top: 1rem !important;
+  right: 1rem !important;
+  background-color: #ef4444 !important; /* Red color */
+  color: white !important;
+  border: none !important;
+  border-radius: 0.5rem !important;
+  padding: 0.75rem 1.25rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  z-index: 100 !important;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2) !important;
+  transition: all 0.2s ease !important;
+  width: auto !important; /* Override any fixed width */
+  min-width: auto !important;
+  /* Override any gradient backgrounds */
+  background-image: none !important;
+}
+
+.delete-account-button:hover {
+  background-color: #dc2626 !important;
+  box-shadow: 0 4px 6px rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Ensure header has proper spacing */
+.header {
+  margin-top: 2rem !important;
+  padding-top: 1rem !important;
+}
+
+/* Override any conflicting button styles */
+button.settings-button,
+button.delete-account-button {
+  all: unset; /* Reset all properties */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Make sure buttons are visible above other elements */
+.dashboard-container > button {
+  z-index: 1000 !important;
+}
+/* Add or update these styles in CoachDashboard.css */
+.modal-close {
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  background: none !important;
+  border: none !important;
+  width: 24px !important;
+  height: 24px !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  color: #64748b !important;
+  font-size: 18px !important;
+  border-radius: 4px !important;
+  transition: all 0.2s ease !important;
+}
+
+.modal-close:hover {
+  background-color: #f1f5f9 !important;
+  color: #334155 !important;
+}
+
+/* Make sure modal header accommodates the absolute positioned close button */
+.modal-header {
+  position: relative !important;
+  padding: 1.5rem !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+.modal-header h2 {
+  margin: 0 !important;
+  padding-right: 24px !important; /* Make space for close button */
+  color: #1e293b !important;
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+}
+/* Add these styles to your CoachDashboard.css file */
+
+.modal-footer {
+  padding: 1.5rem !important;
+  border-top: 1px solid #e2e8f0 !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  gap: 1rem !important;
+}
+
+.modal-footer .cancel-button {
+  padding: 0.5rem 1rem !important;
+  border-radius: 0.375rem !important;
+  border: 1px solid #e2e8f0 !important;
+  background-color: white !important;
+  color: #f3f4f5 !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.modal-footer .cancel-button:hover {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+}
+
+.modal-footer .delete-button {
+  padding: 0.5rem 1rem !important;
+  border-radius: 0.375rem !important;
+  border: none !important;
+  background-color: #ef4444 !important;
+  color: white !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  position: static !important; /* Override any absolute positioning */
+  top: auto !important;
+  right: auto !important;
+}
+
+.modal-footer .delete-button:hover {
+  background-color: #dc2626 !important;
+}
+
+/* Improve modal body spacing */
 .modal-body {
-  max-height: 70vh;
-  overflow-y: auto;
-  padding: 1.5rem;
+  padding: 1.5rem !important;
+  color: #4b5563 !important;
+}
+
+.modal-body p {
+  margin: 0.5rem 0 !important;
+  line-height: 1.5 !important;
+}
+
+/* Ensure modal content has proper spacing */
+.modal-content {
+  padding: 0 !important;
+  max-width: 28rem !important;
+  width: 90% !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+}
+/* Add these keyframes for the spin animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Update settings button styles */
+.settings-button {
+  position: absolute !important;
+  top: 1rem !important;
+  left: 1rem !important;
+  background-color: white !important;
+  color: #64748b !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 0.5rem !important;
+  padding: 0.75rem !important;
+  cursor: pointer !important;
+  z-index: 100 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.2s ease !important;
+  width: auto !important;
+  min-width: auto !important;
+}
+
+/* Add hover effects */
+.settings-button:hover {
+  background-color: #f8fafc !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Add spinning animation to the gear icon when button is hovered */
+.settings-button:hover svg {
+  animation: spin 2s linear infinite;
+}
+/* Add these styles to improve form inputs in the settings modal */
+
+/* Form group styling */
+.settings-form .form-group {
+  margin-bottom: 1.5rem !important;
+}
+
+.settings-form label {
+  display: block !important;
+  margin-bottom: 0.5rem !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: #374151 !important;
+}
+
+/* Input field styling */
+.settings-form input {
+  width: 100% !important;
+  padding: 0.75rem 1rem !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 0.375rem !important;
+  background-color: white !important;
+  color: #1f2937 !important;
+  font-size: 0.875rem !important;
+  line-height: 1.25rem !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Input hover state */
+.settings-form input:hover {
+  border-color: #cbd5e1 !important;
+}
+
+/* Input focus state */
+.settings-form input:focus {
+  outline: none !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Placeholder styling */
+.settings-form input::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Error state styling */
+.settings-form .error-message {
+  background-color: #fef2f2 !important;
+  color: #dc2626 !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 0.375rem !important;
+  margin-bottom: 1.5rem !important;
+  font-size: 0.875rem !important;
+  border: 1px solid #fecaca !important;
+}
+
+/* Success message styling */
+.settings-form .success-message {
+  background-color: #f0fdf4 !important;
+  color: #16a34a !important;
+  padding: 0.75rem 1rem !important;
+  border-radius: 0.375rem !important;
+  margin-bottom: 1.5rem !important;
+  font-size: 0.875rem !important;
+  border: 1px solid #bbf7d0 !important;
+}
+
+/* Form actions container */
+.settings-form .form-actions {
+  display: flex !important;
+  gap: 1rem !important;
+  margin-top: 2rem !important;
+}
+
+/* Update button styling */
+.settings-form .update-button {
+  background-color: #3b82f6 !important;
+  color: white !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 0.375rem !important;
+  font-weight: 500 !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s ease !important;
+}
+
+.settings-form .update-button:hover {
+  background-color: #2563eb !important;
+}
+
+/* Cancel button styling */
+.settings-form .cancel-button {
+  background-color: white !important;
+  color: #f5f6f7 !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 0.375rem !important;
+  font-weight: 500 !important;
+  border: 1px solid #e2e8f0 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.settings-form .cancel-button:hover {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+}
+
+/* Modal body padding adjustment */
+.modal-body {
+  padding: 1.5rem !important;
+  max-height: 80vh !important;
+  overflow-y: auto !important;
+}
+
+/* Password input specific styling */
+.settings-form input[type="password"] {
+  letter-spacing: 0.1em !important;
 }

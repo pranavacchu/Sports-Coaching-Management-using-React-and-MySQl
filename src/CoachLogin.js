@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './CoachLogin.css'; 
-import wallpaper from "C:/Users/prana/OneDrive/Desktop/sports/my-react-app/src/wallpaper.png"; // Path to your image
+import './CoachLogin.css';
+import wallpaper from "C:/Users/prana/OneDrive/Desktop/sports/my-react-app/src/wallpaper.png";
 
 function CoachLogin() {
   const [email, setEmail] = useState('');
@@ -18,13 +18,9 @@ function CoachLogin() {
       });
 
       if (response.status === 200) {
-        const { coachId, coachName } = response.data;  // Extracting both from response
-
-        // Store the coach's name and id in localStorage
-        localStorage.setItem('coachId', coachId);      // Correctly setting coachId
-        localStorage.setItem('coachName', coachName);  // Correctly setting coachName
-
-        // Redirect to the coach dashboard
+        const { coachId, coachName } = response.data;
+        localStorage.setItem('coachId', coachId);
+        localStorage.setItem('coachName', coachName);
         navigate('/coach-dashboard');
       }
     } catch (error) {
@@ -32,11 +28,15 @@ function CoachLogin() {
     }
   };
 
+  const handlePlayerRedirect = () => {
+    navigate('/player-auth');
+  };
+
   return (
     <div className="login-container">
       <div className="login-form">
         <h1 className="form-title">Welcome Back, Coach!</h1>
-        <p className="form-subtitle">Let’s get started with your coaching journey.</p>
+        <p className="form-subtitle">Let's get started with your coaching journey.</p>
         <input 
           type="email" 
           placeholder="Enter your email" 
@@ -54,9 +54,9 @@ function CoachLogin() {
         {errorMessage && <p className="error-message">{errorMessage}</p>}
         <button className="sign-in-btn" onClick={handleLogin}>Sign In</button>
         <div className="separator">OR</div>
-        <button className="player-btn">Sign In as Player</button>
+        <button className="player-btn" onClick={handlePlayerRedirect}>Sign In as Player</button>
         <p className="signup-text">
-          Don’t have an account?{' '}
+          Don't have an account?{' '}
           <Link to="/signup-coach" className="signup-link">Sign Up as Coach</Link>
         </p>
       </div>

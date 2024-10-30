@@ -1,210 +1,189 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Calendar } from 'lucide-react';
 import './PlayerDashboard.css';
 
-const SportsRegistration = () => {
-  const [selectedTeam, setSelectedTeam] = useState('');
-  const [selectedCoach, setSelectedCoach] = useState('');
-  const [selectedSport, setSelectedSport] = useState('');
-  const [schedule, setSchedule] = useState({
-    Wednesday: false,
-    Friday: false,
-    Saturday: false,
-  });
-  const [times, setTimes] = useState({});
+const PlayerDashboard = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [showTeamsModal, setShowTeamsModal] = useState(false);
+  const [teams, setTeams] = useState([]);
+  const [dashboardData, setDashboardData] = useState({
+    playerName: '',
+    totalTeams: 0,
+    upcomingSessions: []
+  });
 
-  const handleDayChange = (day) => {
-    setSchedule(prev => ({...prev, [day]: !prev[day]}));
-    if (!schedule[day]) {
-      setTimes(prev => ({...prev, [day]: ''}));
-    } else {
-      const { [day]: _, ...rest } = times;
-      setTimes(rest);
-    }
-  };
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        setLoading(true);
+        const playerId = localStorage.getItem('playerId');
+        const storedPlayerName = localStorage.getItem('playerName');
 
-  const handleTimeChange = (day, time) => {
-    setTimes(prev => ({...prev, [day]: time}));
-  };
+        if (!playerId) {
+          throw new Error('Player ID not found in local storage');
+        }
 
-  const generateTimeOptions = () => {
-    const options = [];
-    for (let i = 6; i < 18; i++) {
-      const startHour = i % 12 === 0 ? 12 : i % 12;
-      const endHour = (i + 1) % 12 === 0 ? 12 : (i + 1) % 12;
-      const startSuffix = i < 12 ? 'AM' : 'PM';
-      const endSuffix = (i + 1) < 12 ? 'AM' : 'PM';
-      
-      options.push(`${startHour}${startSuffix} - ${endHour}${endSuffix}`);
-    }
-    return options;
-  };
+        // Fetch teams for the player
+        const teamsResponse = await axios.get(`http://localhost:5000/api/player-teams/${playerId}`);
+        setTeams(teamsResponse.data);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-    setSuccessMessage('');
+        // Fetch other dashboard data
+        const dashboardResponse = await axios.get(`http://localhost:5000/api/player-dashboard/${playerId}`);
+        
+        setDashboardData({
+          playerName: storedPlayerName || '',
+          totalTeams: teamsResponse.data.length,
+          upcomingSessions: dashboardResponse.data.upcomingSessions || []
+        });
 
-    // Format schedule data
-    const scheduleData = {};
-    Object.keys(schedule).forEach(day => {
-      if (schedule[day]) {
-        scheduleData[day] = times[day];
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching dashboard data:', err);
+        setError(`Failed to load dashboard data: ${err.message}`);
+      } finally {
+        setLoading(false);
       }
-    });
+    };
 
-    // Get playerId from localStorage (assuming it was stored during login)
-    const playerId = localStorage.getItem('playerId');
-    if (!playerId) {
-      setError('Please login first');
-      setLoading(false);
-      return;
-    }
+    fetchDashboardData();
+  }, []);
 
-    try {
-      const response = await fetch('http://localhost:5000/player/register-sport', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          playerId: parseInt(playerId),
-          teamLevel: selectedTeam,
-          coachId: parseInt(selectedCoach),
-          sport: selectedSport,
-          schedule: scheduleData
-        })
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to register sport');
-      }
-
-      setSuccessMessage('Sport registration successful!');
-      
-      // Reset form
-      setSelectedTeam('');
-      setSelectedCoach('');
-      setSelectedSport('');
-      setSchedule({
-        Wednesday: false,
-        Friday: false,
-        Saturday: false,
-      });
-      setTimes({});
-
-    } catch (err) {
-      setError(err.message || 'An error occurred during registration');
-    } finally {
-      setLoading(false);
-    }
+  const TeamsModal = ({ teams, onClose }) => {
+    return (
+      <div className="modal-overlay">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h2>Your Teams</h2>
+            <button className="modal-close" onClick={onClose}>&times;</button>
+          </div>
+          <div className="modal-body">
+            {teams.map(team => (
+              <div key={team.id} className="team-card">
+                <h3>{team.team_name}</h3>
+                <div className="team-details">
+                  <p><strong>Category:</strong> {team.category}</p>
+                  <p><strong>Coach:</strong> {team.coach_name}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="modal-footer">
+            <button className="back-button" onClick={onClose}>Back</button>
+          </div>
+        </div>
+      </div>
+    );
   };
+
+  const handleCreateTeam = () => {
+    navigate('/create-team');
+  };
+
+  const handleTrainingSessions = () => {
+    navigate('/training-sessions');
+  };
+
+  if (loading) return (
+    <div className="loading-container">
+      <div className="loading-spinner"></div>
+      <p>Loading dashboard...</p>
+    </div>
+  );
 
   return (
-    <form onSubmit={handleSubmit} className="sports-registration">
-      <div className="welcome-banner">
-        <h1>Welcome, Player!</h1>
-        <p>Let's customize your sports journey</p>
+    <div className="dashboard-container">
+      <div className="header">
+        <h1 className="welcome-text">Welcome to Your Sports Hub!</h1>
+        <p className="player-name">{dashboardData.playerName}</p>
       </div>
 
       {error && <div className="error-message">{error}</div>}
-      {successMessage && <div className="success-message">{successMessage}</div>}
 
-      <div className="selection-container">
-        <div className="select-wrapper">
-          <label htmlFor="team">Select Your Team</label>
-          <select
-            id="team"
-            value={selectedTeam}
-            onChange={(e) => setSelectedTeam(e.target.value)}
-            required
-            disabled={loading}
-          >
-            <option value="">Choose a team</option>
-            <option value="Basic">Basic</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Advanced">Advanced</option>
-          </select>
+      <div className="stats-container">
+        <div className="stat-box">
+          <p>Active Teams</p>
+          <h3>{dashboardData.totalTeams}</h3>
         </div>
-
-        <div className="select-wrapper">
-          <label htmlFor="coach">Select Your Coach</label>
-          <select
-            id="coach"
-            value={selectedCoach}
-            onChange={(e) => setSelectedCoach(e.target.value)}
-            required
-            disabled={loading}
-          >
-            <option value="">Choose a coach</option>
-            <option value="1">David Miller</option>
-            <option value="2">Samantha Clark</option>
-            <option value="3">Robert Johnson</option>
-          </select>
+        <div className="stat-box">
+          <p>Upcoming Sessions</p>
+          <h3>{dashboardData.upcomingSessions.length}</h3>
         </div>
+      </div>
 
-        <div className="select-wrapper">
-          <label htmlFor="sport">Select Your Sport</label>
-          <select
-            id="sport"
-            value={selectedSport}
-            onChange={(e) => setSelectedSport(e.target.value)}
-            required
-            disabled={loading}
-          >
-            <option value="">Choose a sport</option>
-            <option value="Football">Football</option>
-            <option value="Basketball">Basketball</option>
-            <option value="Cricket">Cricket</option>
-            <option value="Badminton">Badminton</option>
-          </select>
-        </div>
-
-        <div className="schedule-container">
-          <label>Training Schedule</label>
-          {Object.keys(schedule).map((day) => (
-            <div key={day} className="day-row">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={schedule[day]}
-                  onChange={() => handleDayChange(day)}
-                  disabled={loading}
-                />
-                {day}
-              </label>
-              {schedule[day] && (
-                <select
-                  value={times[day] || ''}
-                  onChange={(e) => handleTimeChange(day, e.target.value)}
-                  required
-                  disabled={loading}
-                >
-                  <option value="">Select time</option>
-                  {generateTimeOptions().map((time) => (
-                    <option key={time} value={time}>{time}</option>
-                  ))}
-                </select>
-              )}
-            </div>
-          ))}
-        </div>
-
+      <div className="quick-actions">
         <button 
-          type="submit" 
-          className="submit-button" 
+          className="action-button view-teams" 
+          onClick={() => setShowTeamsModal(true)}
           disabled={loading}
         >
-          {loading ? 'Saving Changes...' : 'Save Changes'}
+          View Teams
+        </button>
+        <button 
+          className="action-button create-team" 
+          onClick={handleCreateTeam}
+          disabled={loading}
+        >
+          Create Team
+        </button>
+        <button 
+          className="action-button view-sessions"
+          onClick={handleTrainingSessions}
+          disabled={loading}
+        >
+          Training Sessions
         </button>
       </div>
-    </form>
+
+      {showTeamsModal && (
+        <TeamsModal
+          teams={teams}
+          onClose={() => setShowTeamsModal(false)}
+        />
+      )}
+
+      <div className="upcoming-sessions-container">
+        <div className="upcoming-sessions-header">
+          <Calendar size={24} />
+          <h2>Upcoming Training Sessions</h2>
+        </div>
+        {dashboardData.upcomingSessions.length > 0 ? (
+          <div className="sessions-grid">
+            {dashboardData.upcomingSessions.map((session, index) => (
+              <div key={index} className="session-card">
+                <div className="session-date-container">
+                  <div className="session-month">
+                    {new Date(session.session_date).toLocaleDateString('en-US', { month: 'short' })}
+                  </div>
+                  <div className="session-day">
+                    {new Date(session.session_date).getDate()}
+                  </div>
+                </div>
+                <div className="session-details">
+                  <div className="session-time">
+                    {new Date(`2000-01-01T${session.session_time}`).toLocaleTimeString([], {
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
+                  </div>
+                  <div className="session-team-name">
+                    {session.team_name}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="no-sessions">
+            <p>No upcoming sessions scheduled</p>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 
-export default SportsRegistration;
+export default PlayerDashboard;

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './LoginSignUp.css';
+import wallpaper from "C:/Users/prana/OneDrive/Desktop/sports/my-react-app/src/wallpaper2.png";
 
 const LoginSignup = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -9,7 +10,9 @@ const LoginSignup = () => {
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [gender, setGender] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
   const [error, setError] = useState('');
+  const [message, setMessage] = useState(''); // New state for success/error messages
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -18,24 +21,11 @@ const LoginSignup = () => {
     setError('');
     setIsLoading(true);
 
-    // Input validation
-    if (isLogin && (!email || !password)) {
-      setError('Please fill in all fields');
-      setIsLoading(false);
-      return;
-    }
-
-    if (!isLogin && (!name || !age || !gender || !email || !password)) {
-      setError('Please fill in all fields');
-      setIsLoading(false);
-      return;
-    }
-
     try {
       const endpoint = isLogin ? '/player-login' : '/player-signup';
       const payload = isLogin
         ? { email, password }
-        : { name, age: parseInt(age), gender, email, password };
+        : { name, age, gender, contactNumber, email, password };
 
       const response = await fetch(`http://localhost:5000${endpoint}`, {
         method: 'POST',
@@ -51,15 +41,16 @@ const LoginSignup = () => {
         throw new Error(data.error || 'An error occurred');
       }
 
-      // Store user data in localStorage
-      localStorage.setItem('playerId', data.playerId);
-      localStorage.setItem('playerName', data.playerName);
-
-      // Show success message
-      console.log(data.message);
-
-      // Navigate to dashboard
-      navigate('/dashboard');
+      if (isLogin) {
+        localStorage.setItem('playerId', data.playerId);
+        localStorage.setItem('playerName', data.playerName);
+        navigate('/dashboard');
+      } else {
+        setMessage('Account created successfully!');
+        setTimeout(() => {
+          setIsLogin(true);
+        }, 2000);
+      }
     } catch (err) {
       setError(err.message || 'An error occurred. Please try again.');
     } finally {
@@ -74,7 +65,9 @@ const LoginSignup = () => {
     setName('');
     setAge('');
     setGender('');
+    setContactNumber('');
     setError('');
+    setMessage('');
   };
 
   return (
@@ -83,6 +76,7 @@ const LoginSignup = () => {
         <div className="left-panel">
           <h1>{isLogin ? 'Welcome Back, Player!' : 'Join Prishiks Academy!'}</h1>
           <p>Let's get started with your {isLogin ? 'game' : 'journey'}.</p>
+          {message && <p className="message">{message}</p>} {/* Display success/error message */}
           <form onSubmit={handleSubmit}>
             {!isLogin && (
               <>
@@ -111,10 +105,18 @@ const LoginSignup = () => {
                   disabled={isLoading}
                 >
                   <option value="">Select Gender</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
                 </select>
+                <input
+                  type="text"
+                  placeholder="Contact Number"
+                  value={contactNumber}
+                  onChange={(e) => setContactNumber(e.target.value)}
+                  required
+                  disabled={isLoading}
+                />
               </>
             )}
             <input
@@ -144,13 +146,15 @@ const LoginSignup = () => {
               }
             </button>
           </form>
-          <p onClick={!isLoading ? toggleForm : undefined} 
-             className={`toggle-form ${isLoading ? 'disabled' : ''}`}>
+          <p 
+            onClick={!isLoading ? toggleForm : undefined} 
+            className={`toggle-form ${isLoading ? 'disabled' : ''}`}
+          >
             {isLogin ? "New player? Sign up" : "Already have an account? Log in"}
           </p>
         </div>
         <div className="right-panel">
-          <h2></h2>
+          <img src={wallpaper} alt="Sports Academy" className="banner-image" />
         </div>
       </div>
     </div>

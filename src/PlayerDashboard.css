@@ -1,97 +1,294 @@
 /* PlayerDashboard.css */
-
-/* PlayerDashboard.css */
-
-.welcome-banner h1 {
-  font-size: 24px;
-  color: transparent;
-  background-image: linear-gradient(to right, #1e90ff, #00bfff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #ffffff;
 }
 
-.welcome-banner p {
-  font-size: 16px;
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  background-color: #ffffff;
+  min-height: 100vh;
+  overflow-y: auto; /* Enables vertical scrolling */
+}
+
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.welcome-text {
+  font-size: 2.5rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.player-name {
+  font-size: 1.5rem;
+  color: #555;
+  margin: 0;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  margin-bottom: 2rem;
+}
+
+.stat-box {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  flex: 1;
+  margin: 0 1rem;
+  transition: transform 0.2s ease;
+}
+
+.stat-box:hover {
+  transform: translateY(-3px);
+}
+
+.stat-box p {
+  font-weight: bold;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
   color: #666;
 }
 
-.sports-registration {
-    max-width: 1000px;
-    max-height: 1100px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: whitesmoke;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.stat-box h3 {
+  font-size: 2rem;
+  margin: 0;
+  color: #333;
+}
+
+.quick-actions {
+  display: flex;
+  justify-content: space-around;
+  width: 80%;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.action-button {
+  padding: 1rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-align: center;
+  flex: 1;
+}
+
+.select-team {
+  background: linear-gradient(90deg, #0f0145, #2575fc);
+}
+
+.select-coach {
+  background: linear-gradient(90deg, #0d2ddf, #4abcf9);
+}
+
+.create-team {
+  background: linear-gradient(90deg, #087fa4, #84c3ed);
+}
+
+.view-sessions {
+  background: linear-gradient(90deg, #0066cc, #4da6ff);
+}
+
+.action-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.upcoming-sessions {
+  width: 80%;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+.upcoming-sessions h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.sessions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.session-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s ease;
+}
+
+.session-item:last-child {
+  border-bottom: none;
+}
+
+.session-item:hover {
+  background-color: #f8f9fa;
+}
+
+.session-date {
+  font-weight: 500;
+  color: #333;
+}
+
+.session-time {
+  color: #666;
+}
+
+.session-team {
+  color: #0066cc;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .stats-container,
+  .quick-actions {
+    flex-direction: column;
+    width: 90%;
   }
-  
-  .welcome-banner {
-    text-align: center;
-    margin-bottom: 20px;
+
+  .stat-box,
+  .action-button {
+    margin: 0.5rem 0;
   }
-  
-  .welcome-banner h1 {
-    font-size: 24px;
-    color: #333;
+
+  .upcoming-sessions {
+    width: 90%;
   }
-  
-  .welcome-banner p {
-    font-size: 16px;
-    color: #666;
+
+  .session-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
-  
-  .selection-container {
-    margin-top: 20px;
+}
+/* Add these styles to your PlayerDashboard.css file */
+
+.upcoming-sessions-container {
+  width: 80%;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.upcoming-sessions-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 1rem;
+}
+
+.upcoming-sessions-header h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0;
+}
+
+.sessions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  padding: 1rem 0;
+}
+
+.session-card {
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.session-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.session-date-container {
+  background: linear-gradient(135deg, #0f0145, #2575fc);
+  color: white;
+  padding: 0.8rem;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 80px;
+}
+
+.session-month {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.session-day {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.session-details {
+  margin-left: 1rem;
+  flex-grow: 1;
+}
+
+.session-time {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.session-team-name {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.no-sessions {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+@media (max-width: 768px) {
+  .upcoming-sessions-container {
+    width: 90%;
+    padding: 1rem;
   }
-  
-  .select-wrapper {
-    margin-bottom: 15px;
+
+  .sessions-grid {
+    grid-template-columns: 1fr;
   }
-  
-  label {
-    display: block;
-    font-size: 14px;
-    color: #333;
-    margin-bottom: 5px;
-  }
-  
-  select {
+
+  .session-card {
     width: 100%;
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
   }
-  
-  .schedule-container {
-    margin-top: 20px;
-  }
-  
-  .day-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-  }
-  
-  input[type="checkbox"] {
-    margin-right: 10px;
-  }
-  
-  .submit-button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    color: #fff;
-    background-color: #28a745;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .submit-button:hover {
-    background-color: #218838;
-  }
-  
+}
