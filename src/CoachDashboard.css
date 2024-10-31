@@ -1,9 +1,11 @@
   /* CoachDashboard.css */
   body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background-color: #ffffff;
-    }
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff;
+    min-height: 100vh;
+    overflow-y: auto !important; /* Enable vertical scrolling */
+  }
     
     .dashboard-container {
       display: flex;
@@ -11,7 +13,11 @@
       align-items: center;
       padding: 2rem;
       background-color: #ffffff;
-      height: 100vh;
+      min-height: 100vh; /* Change from height to min-height */
+      position: relative;
+      width: 100%;
+      box-sizing: border-box;
+      overflow-y: auto; /* Enable scrolling within container */
     }
     
     .header {
@@ -683,4 +689,349 @@ button.delete-account-button {
 /* Password input specific styling */
 .settings-form input[type="password"] {
   letter-spacing: 0.1em !important;
+}
+/* Professional Modal Styles */
+.modal-overlay {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 700px;
+  max-height: 85vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-header {
+  position: relative;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #e5e7eb;
+  background: linear-gradient(to right, #f8fafc, #ffffff);
+  border-radius: 12px 12px 0 0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.modal-header h2 svg {
+  color: #3b82f6;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  width: 2rem;
+  height: 2rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background-color: #f1f5f9;
+  color: #1e293b;
+  transform: scale(1.05);
+}
+
+.modal-body {
+  padding: 2rem;
+  overflow-y: auto;
+  max-height: calc(85vh - 180px);
+}
+
+/* Sessions List Styling */
+.sessions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.session-card {
+  display: flex;
+  align-items: center;
+  padding: 1.25rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.session-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.1);
+  border-color: #bfdbfe;
+}
+
+.session-date-container {
+  min-width: 80px;
+  padding: 0.75rem;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  text-align: center;
+  margin-right: 1.5rem;
+}
+
+.session-month {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.session-day {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  line-height: 1.2;
+  margin-top: 0.25rem;
+}
+
+.session-details {
+  flex: 1;
+}
+
+.session-time {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.375rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.session-time svg {
+  color: #3b82f6;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.session-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.session-player {
+  font-size: 1rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.session-type {
+  font-size: 0.875rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.session-status {
+  display: flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  background: #f0f9ff;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #0369a1;
+  margin-left: auto;
+}
+
+/* Schedule Modal Specific Styles */
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.schedule-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.schedule-navigation {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.schedule-nav-button {
+  padding: 0.5rem;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.schedule-nav-button:hover {
+  background: #f8fafc;
+  color: #1e293b;
+}
+
+.current-month {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.modal-footer {
+  padding: 1.5rem 2rem;
+  background: #f8fafc;
+  border-top: 1px solid #e5e7eb;
+  border-radius: 0 0 12px 12px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.modal-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.modal-button-primary {
+  background: #3b82f6;
+  color: white;
+  border: none;
+}
+
+.modal-button-primary:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.modal-button-secondary {
+  background: white;
+  color: #64748b;
+  border: 1px solid #e5e7eb;
+}
+
+.modal-button-secondary:hover {
+  background: #f8fafc;
+  color: #1e293b;
+  border-color: #cbd5e1;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 640px) {
+  .modal-content {
+    max-height: 90vh;
+    margin: 1rem;
+  }
+
+  .modal-body {
+    padding: 1rem;
+  }
+
+  .session-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .session-date-container {
+    margin-right: 0;
+  }
+
+  .session-status {
+    margin-left: 0;
+    margin-top: 0.5rem;
+  }
+
+  .schedule-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}
+
+/* Empty State Styling */
+.empty-state {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #64748b;
+}
+
+.empty-state svg {
+  width: 4rem;
+  height: 4rem;
+  color: #94a3b8;
+  margin-bottom: 1.5rem;
+}
+
+.empty-state h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.75rem;
+}
+
+.empty-state p {
+  color: #64748b;
+  max-width: 24rem;
+  margin: 0 auto;
 }

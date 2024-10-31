@@ -1,351 +1,489 @@
-/* PlayerDashboard.css */
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif;
-  background-color: #ffffff;
-}
+/* ==========================================================================
+   PlayerDashboard.css
+   Main styling for the player dashboard interface
+   ========================================================================== */
 
-.dashboard-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-  background-color: #ffffff;
-  min-height: 100vh;
-  overflow-y: auto; /* Enables vertical scrolling */
-}
-
-
-.header {
-  text-align: center;
-  margin-bottom: 2rem;
-}
-
-.welcome-text {
-  font-size: 2.5rem;
-  font-weight: bold;
-  background: linear-gradient(90deg, #00c6ff, #0072ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 0.5rem;
-}
-
-.player-name {
-  font-size: 1.5rem;
-  color: #555;
-  margin: 0;
-}
-
-.stats-container {
-  display: flex;
-  justify-content: space-around;
-  width: 80%;
-  margin-bottom: 2rem;
-}
-
-.stat-box {
-  background-color: #f1f1f1;
-  border-radius: 10px;
-  padding: 1rem 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  flex: 1;
-  margin: 0 1rem;
-  transition: transform 0.2s ease;
-}
-
-.stat-box:hover {
-  transform: translateY(-3px);
-}
-
-.stat-box p {
-  font-weight: bold;
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-  color: #666;
-}
-
-.stat-box h3 {
-  font-size: 2rem;
-  margin: 0;
-  color: #333;
-}
-
-.quick-actions {
-  display: flex;
-  justify-content: space-around;
-  width: 80%;
-  margin-bottom: 2rem;
-  gap: 1rem;
-}
-
-.action-button {
-  padding: 1rem;
-  font-size: 1.2rem;
-  border: none;
-  border-radius: 10px;
-  color: white;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  text-align: center;
-  flex: 1;
-}
-
-.select-team {
-  background: linear-gradient(90deg, #0f0145, #2575fc);
-}
-
-.select-coach {
-  background: linear-gradient(90deg, #0d2ddf, #4abcf9);
-}
-
-.create-team {
-  background: linear-gradient(90deg, #087fa4, #84c3ed);
-}
-
-.view-sessions {
-  background: linear-gradient(90deg, #0066cc, #4da6ff);
-}
-
-.action-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-.upcoming-sessions {
-  width: 80%;
-  background-color: white;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 2rem;
-}
-
-.upcoming-sessions h3 {
-  margin: 0 0 1rem 0;
-  font-size: 1.5rem;
-  color: #333;
-}
-
-.sessions-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.session-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  border-bottom: 1px solid #eee;
-  transition: background-color 0.2s ease;
-}
-
-.session-item:last-child {
-  border-bottom: none;
-}
-
-.session-item:hover {
-  background-color: #f8f9fa;
-}
-
-.session-date {
-  font-weight: 500;
-  color: #333;
-}
-
-.session-time {
-  color: #666;
-}
-
-.session-team {
-  color: #0066cc;
-  font-weight: 500;
-}
-
-@media (max-width: 768px) {
-  .stats-container,
-  .quick-actions {
-    flex-direction: column;
-    width: 90%;
+/* Base Container
+   ========================================================================== */
+   .pd-dashboard-container {
+    position: relative;
+    height: 100vh;
+    background-color: #f8f9fa;
+    overflow-y: auto;
+    padding-top: 60px; /* Space for fixed header buttons */
   }
-
-  .stat-box,
-  .action-button {
-    margin: 0.5rem 0;
-  }
-
-  .upcoming-sessions {
-    width: 90%;
-  }
-
-  .session-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
-}
-/* Add these styles to your PlayerDashboard.css file */
-
-.upcoming-sessions-container {
-  width: 80%;
-  background-color: white;
-  border-radius: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 2rem;
-  margin-top: 2rem;
-}
-
-.upcoming-sessions-header {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  border-bottom: 2px solid #f0f0f0;
-  padding-bottom: 1rem;
-}
-
-.upcoming-sessions-header h2 {
-  font-size: 1.5rem;
-  color: #333;
-  margin: 0;
-}
-
-.sessions-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem;
-  padding: 1rem 0;
-}
-
-.session-card {
-  display: flex;
-  align-items: center;
-  background-color: #f8f9fa;
-  border-radius: 12px;
-  padding: 1rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.session-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.session-date-container {
-  background: linear-gradient(135deg, #0f0145, #2575fc);
-  color: white;
-  padding: 0.8rem;
-  border-radius: 8px;
-  text-align: center;
-  min-width: 80px;
-}
-
-.session-month {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  margin-bottom: 0.2rem;
-}
-
-.session-day {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.session-details {
-  margin-left: 1rem;
-  flex-grow: 1;
-}
-
-.session-time {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 0.5rem;
-}
-
-.session-team-name {
-  color: #666;
-  font-size: 0.9rem;
-}
-
-.no-sessions {
-  text-align: center;
-  padding: 2rem;
-  color: #666;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-}
-
-@media (max-width: 768px) {
-  .upcoming-sessions-container {
-    width: 90%;
-    padding: 1rem;
-  }
-
-  .sessions-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .session-card {
+  
+  .pd-dashboard-content {
     width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem 2.5rem;
   }
-}
-/* Add these styles to your PlayerDashboard.css file */
-
-.settings-button {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: #333;
-  padding: 0.5rem;
-  border-radius: 50%;
-  transition: background-color 0.2s ease;
-}
-
-.settings-button:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-.delete-account-button {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.delete-account-button:hover {
-  background-color: #c82333;
-}
-
-.modal-overlay {
+  /* Header Buttons
+   ========================================================================== */
+/* Updated Header Buttons
+   ========================================================================== */
+   .pd-dashboard-container {
+    position: relative;
+    height: 100vh;
+    background-color: #f8f9fa;
+    overflow-y: auto;
+    padding: 1.5rem;  /* Reduced padding since we removed fixed positioning */
+  }
+  
+  .pd-dashboard-buttons-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 0.5rem;
+  }
+  
+  .pd-dashboard-settings-button,
+  .pd-dashboard-delete-button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .pd-dashboard-settings-button {
+    color: #f1f5f9;
+    background-color: #f1f5f9;
+    padding: 0.5rem;
+    height: 36px;
+    width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .pd-dashboard-settings-button:hover {
+    background-color: #e2e8f0;
+  }
+  
+  .pd-dashboard-delete-button {
+    color: #ffffff;
+    background-color: #ef4444;
+    padding: 0.5rem;
+    height: 36px;
+    width: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .pd-dashboard-delete-button:hover {
+    background-color: #dc2626;
+  }
+  
+  /* Update responsive styles */
+  @media (max-width: 768px) {
+    .pd-dashboard-container {
+      padding: 1rem;
+    }
+  
+    .pd-dashboard-buttons-container {
+      margin-bottom: 1.5rem;
+    }
+  }
+  
+  /* Header Styles
+     ========================================================================== */
+     .pd-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    
+    .pd-welcome-text {
+      font-size: 2.75rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.5px;
+    }
+    
+    .pd-player-name {
+      font-size: 1.5rem;
+      color: #4a5568;
+      margin: 0;
+      font-weight: 500;
+    }
+  /* Statistics Section
+     ========================================================================== */
+  .pd-stats-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    width: 100%;
+    margin-bottom: 3rem;
+  }
+  
+  .pd-stat-box {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    flex: 1;
+    transition: all 0.3s ease;
+  }
+  
+  .pd-stat-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pd-stat-box p {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  .pd-stat-box h3 {
+    font-size: 2.5rem;
+    margin: 0;
+    color: #1e293b;
+    font-weight: 700;
+  }
+  
+  /* Quick Actions
+     ========================================================================== */
+  .pd-quick-actions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 3rem;
+    gap: 1.5rem;
+  }
+  
+  .pd-action-button {
+    padding: 1.25rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    flex: 1;
+    letter-spacing: 0.5px;
+  }
+  
+  .pd-view-teams {
+    background: linear-gradient(135deg, #0f0145 0%, #2575fc 100%);
+  }
+  
+  .pd-create-team {
+    background: linear-gradient(135deg, #087fa4 0%, #84c3ed 100%);
+  }
+  
+  .pd-view-sessions {
+    background: linear-gradient(135deg, #0066cc 0%, #4da6ff 100%);
+  }
+  
+  .pd-action-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Upcoming Sessions
+     ========================================================================== */
+     .pd-upcoming-sessions-container {
+      width: 100%;
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+      padding: 2.5rem;
+      margin-top: 2rem;
+      margin-bottom: 2rem; /* Add bottom margin for better scrolling experience */
+    }
+  
+  .pd-upcoming-sessions-header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 2px solid #f1f5f9;
+    padding-bottom: 1.25rem;
+  }
+  
+  .pd-upcoming-sessions-header h2 {
+    font-size: 1.75rem;
+    color: #1e293b;
+    margin: 0;
+    font-weight: 700;
+  }
+  
+  .pd-sessions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem 0;
+  }
+  
+  .pd-session-card {
+    display: flex;
+    align-items: center;
+    background-color: #f8fafc;
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: all 0.3s ease;
+  }
+  
+  .pd-session-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .pd-session-date-container {
+    background: linear-gradient(135deg, #0f0145 0%, #2575fc 100%);
+    color: white;
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 90px;
+  }
+  
+  .pd-session-month {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+  
+  .pd-session-day {
+    font-size: 1.75rem;
+    font-weight: 700;
+  }
+  
+  .pd-session-details {
+    margin-left: 1.25rem;
+    flex-grow: 1;
+  }
+  
+  .pd-session-time {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+  }
+  
+  .pd-session-team-name {
+    color: #64748b;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  
+  /* Modal Styles
+     ========================================================================== */
+  .pd-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+  }
+  
+  .pd-modal-content {
+    background-color: white;
+    border-radius: 16px;
+    padding: 2.5rem;
+    width: 90%;
+    max-width: 550px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Form Styles
+     ========================================================================== */
+  .pd-form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .pd-form-group label {
+    display: block;
+    margin-bottom: 0.75rem;
+    color: #334155;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  
+  .pd-form-group input,
+  .pd-form-group select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .pd-form-group input:focus,
+  .pd-form-group select:focus {
+    outline: none;
+    border-color: #0066cc;
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+  }
+  /* Scroll to top button
+   ========================================================================== */
+.pd-scroll-top {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  bottom: 2rem;
+  right: 2rem;
+  background-color: #0066cc;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 1000;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  z-index: 90;
 }
 
-.modal-content {
-  background-color: white;
-  border-radius: 10px;
-  padding: 2rem;
-  width: 90%;
-  max-width: 500px;
-  max-height: 90vh;
-  overflow-y: auto}
+.pd-scroll-top:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+  /* Button Styles
+     ========================================================================== */
+  .pd-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+  
+  .pd-update-button,
+  .pd-delete-confirm,
+  .pd-cancel-button,
+  .pd-modal-close {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .pd-update-button {
+    background-color: #0066cc;
+    color: white;
+  }
+  
+  .pd-update-button:hover {
+    background-color: #0052a3;
+  }
+  
+  .pd-delete-confirm {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .pd-delete-confirm:hover {
+    background-color: #c82333;
+  }
+  
+  .pd-cancel-button,
+  .pd-modal-close {
+    background-color: #64748b;
+    color: white;
+  }
+  
+  .pd-cancel-button:hover,
+  .pd-modal-close:hover {
+    background-color: #475569;
+  }
+  
+  /* Loading States
+     ========================================================================== */
+  .pd-loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    gap: 1.5rem;
+  }
+  
+  .pd-loading-spinner {
+    border: 4px solid #e2e8f0;
+    border-top: 4px solid #0066cc;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    animation: pd-spin 1s linear infinite;
+  }
+  
+  @keyframes pd-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Responsive Design
+     ========================================================================== */
+     @media (max-width: 768px) {
+      .pd-dashboard-container {
+        padding-top: 50px; /* Smaller padding for mobile */
+      }
+    
+      .pd-dashboard-buttons-container {
+        height: 50px;
+        padding: 0 1rem;
+      }
+    
+      .pd-dashboard-content {
+        padding: 0 1rem 2rem;
+      }
+    
+      .pd-dashboard-delete-button span {
+        display: none; /* Hide "Delete Account" text on mobile */
+      }
+    
+      .pd-welcome-text {
+        font-size: 2rem;
+      }
+    
+      .pd-stats-container,
+      .pd-quick-actions {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    
+      .pd-upcoming-sessions-container {
+        padding: 1.5rem;
+      }
+    
+      .pd-sessions-grid {
+        grid-template-columns: 1fr;
+      }
+    
+      .pd-modal-content {
+        padding: 1.5rem;
+        width: 95%;
+      }
+    }
