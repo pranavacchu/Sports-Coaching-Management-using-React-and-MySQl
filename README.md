@@ -1,70 +1,74 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# Sports Coaching Management System
 
-In the project directory, you can run:
+A full-stack web application for managing sports coaching operations. This system allows administrators, coaches, and students to organize, monitor, and participate in coaching programs seamlessly.
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **User Roles**: Separate functionalities for administrators, coaches, and students.
+- **Coach Management**: Add, update, and track coach information and their schedules.
+- **Student Management**: Register students, manage student profiles, and track performance.
+- **Scheduling and Sessions**: Schedule training sessions, assign coaches, and manage bookings.
+- **Attendance and Performance Tracking**: Track student attendance and performance over time.
+- **Responsive UI**: A modern, responsive user interface built with React.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tech Stack
 
-### `npm test`
+- **Frontend**: React, HTML, CSS, JavaScript
+- **Backend**: Node.js, Express
+- **Database**: MySQL
+- **Hosting**: Instructions to deploy on cloud platforms (like Heroku, AWS, etc.)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting Started
 
-### `npm run build`
+### Prerequisites
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Node.js and npm
+- MySQL database
+- (Optional) Git for version control
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Installation
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. **Clone the repository**
 
-### `npm run eject`
+   ```bash
+   git clone https://github.com/pranavacchu/Sports-Coaching-Management-using-React-and-MySQl.git
+   cd Sports-Coaching-Management-using-React-and-MySQl
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+2. **Install dependencies**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   npm install
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. **Set up MySQL Database**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   - Create a MySQL database named `sports_coaching`.
+   - Import the SQL schema located in the `/database` directory.
+   - Update the `config.js` file with your MySQL credentials.
 
-## Learn More
+4. **Start the application**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```bash
+   npm start
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+5. **Access the Application**
 
-### Code Splitting
+   Open your browser and go to [http://localhost:3000](http://localhost:3000).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Project Structure
 
-### Analyzing the Bundle Size
+- `/client`: Contains all frontend React files.
+- `/server`: Contains backend files and APIs.
+- `/database`: Database schema and sample data.
+- `/config`: Configuration files for environment variables.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Future Enhancements
 
-### Making a Progressive Web App
+- **Notifications**: Implement email or SMS notifications for scheduled sessions.
+- **Analytics Dashboard**: Add a dashboard for detailed analytics on performance and attendance.
+- **Payment Integration**: Integrate payment options for students enrolling in sessions.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
