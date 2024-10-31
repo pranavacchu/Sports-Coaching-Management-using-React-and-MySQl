@@ -1035,3 +1035,8 @@ button.delete-account-button {
   max-width: 24rem;
   margin: 0 auto;
 }
+.coach-id {
+  font-size: 0.8em;
+  color: #989797;
+  margin-top: 5px;
+}

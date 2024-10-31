@@ -22,6 +22,7 @@ const PlayerDashboard = () => {
   });
   const [dashboardData, setDashboardData] = useState({
     playerName: '',
+    playerID: '',
     totalTeams: 0,
     upcomingSessions: []
   });
@@ -65,9 +66,10 @@ const PlayerDashboard = () => {
 
         // Fetch other dashboard data
         const dashboardResponse = await axios.get(`http://localhost:5000/api/player-dashboard/${playerId}`);
-        
+
         setDashboardData({
           playerName: storedPlayerName || '',
+          playerID: playerId,
           totalTeams: teamsResponse.data.length,
           upcomingSessions: dashboardResponse.data.upcomingSessions || []
         });
@@ -102,7 +104,7 @@ const PlayerDashboard = () => {
       const playerId = localStorage.getItem('playerId');
       await axios.delete(`http://localhost:5000/api/delete-player/${playerId}`);
       localStorage.clear();
-      navigate('/login');
+      navigate('/player-auth');
     } catch (err) {
       setError('Failed to delete account');
     }
@@ -136,7 +138,7 @@ const PlayerDashboard = () => {
             <input
               type="text"
               value={updateForm.name}
-              onChange={(e) => setUpdateForm({...updateForm, name: e.target.value})}
+              onChange={(e) => setUpdateForm({ ...updateForm, name: e.target.value })}
               required
             />
           </div>
@@ -145,7 +147,7 @@ const PlayerDashboard = () => {
             <input
               type="email"
               value={updateForm.email}
-              onChange={(e) => setUpdateForm({...updateForm, email: e.target.value})}
+              onChange={(e) => setUpdateForm({ ...updateForm, email: e.target.value })}
               required
             />
           </div>
@@ -154,7 +156,7 @@ const PlayerDashboard = () => {
             <input
               type="number"
               value={updateForm.age}
-              onChange={(e) => setUpdateForm({...updateForm, age: e.target.value})}
+              onChange={(e) => setUpdateForm({ ...updateForm, age: e.target.value })}
               required
             />
           </div>
@@ -162,7 +164,7 @@ const PlayerDashboard = () => {
             <label>Gender:</label>
             <select
               value={updateForm.gender}
-              onChange={(e) => setUpdateForm({...updateForm, gender: e.target.value})}
+              onChange={(e) => setUpdateForm({ ...updateForm, gender: e.target.value })}
               required
             >
               <option value="">Select Gender</option>
@@ -176,7 +178,7 @@ const PlayerDashboard = () => {
             <input
               type="tel"
               value={updateForm.contact_number}
-              onChange={(e) => setUpdateForm({...updateForm, contact_number: e.target.value})}
+              onChange={(e) => setUpdateForm({ ...updateForm, contact_number: e.target.value })}
               required
             />
           </div>
@@ -185,7 +187,7 @@ const PlayerDashboard = () => {
             <input
               type="password"
               value={updateForm.currentPassword}
-              onChange={(e) => setUpdateForm({...updateForm, currentPassword: e.target.value})}
+              onChange={(e) => setUpdateForm({ ...updateForm, currentPassword: e.target.value })}
             />
           </div>
           <div className="pd-form-group">
@@ -193,7 +195,7 @@ const PlayerDashboard = () => {
             <input
               type="password"
               value={updateForm.newPassword}
-              onChange={(e) => setUpdateForm({...updateForm, newPassword: e.target.value})}
+              onChange={(e) => setUpdateForm({ ...updateForm, newPassword: e.target.value })}
             />
           </div>
           <div className="pd-modal-actions">
@@ -231,7 +233,7 @@ const PlayerDashboard = () => {
     <div className="pd-dashboard-container">
       {/* Top buttons */}
       <div className="pd-dashboard-buttons-container">
-        <button 
+        <button
           className="pd-dashboard-settings-button"
           onClick={() => setShowSettingsModal(true)}
           aria-label="Settings"
@@ -239,16 +241,16 @@ const PlayerDashboard = () => {
           <Settings size={20} />
         </button>
 
-        <button 
+        <button
           className="pd-dashboard-delete-button group flex items-center gap-2 px-4 py-2 bg-gray-50 text-gray-700 hover:bg-gray-100 transition-all duration-200 rounded-lg border border-gray-200"
           onClick={() => setShowDeleteModal(true)}
           aria-label="Delete Account"
         >
-          <Trash2 
-            size={18} 
-            className="text-gray-500 group-hover:text-gray-700" 
+          <Trash2
+            size={18}
+            className="text-gray-500 group-hover:text-gray-700"
           />
-          
+
         </button>
       </div>
 
@@ -256,7 +258,9 @@ const PlayerDashboard = () => {
       <div className="pd-dashboard-content">
         <div className="pd-header">
           <h1 className="pd-welcome-text">Welcome to Your Sports Hub!</h1>
-          <p className="pd-player-name">{dashboardData.playerName}</p>
+          <p className="pd-player-name">{dashboardData.playerName}
+          <div className="player-id">Player ID: {dashboardData.playerID}</div>
+          </p>
         </div>
 
         {error && <div className="pd-error-message">{error}</div>}
@@ -273,19 +277,19 @@ const PlayerDashboard = () => {
         </div>
 
         <div className="pd-quick-actions">
-          <button 
-            className="pd-action-button pd-view-teams" 
+          <button
+            className="pd-action-button pd-view-teams"
             onClick={() => setShowTeamsModal(true)}
           >
             View Teams
           </button>
-          <button 
-            className="pd-action-button pd-create-team" 
+          <button
+            className="pd-action-button pd-create-team"
             onClick={() => navigate('/create-team')}
           >
             Create Team
           </button>
-          <button 
+          <button
             className="pd-action-button pd-view-sessions"
             onClick={() => navigate('/training-sessions')}
           >

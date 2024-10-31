@@ -8,6 +8,7 @@ const CoachDashboard = () => {
   const navigate = useNavigate();
   const [dashboardData, setDashboardData] = useState({
     coachName: '',
+    coachId: '',
     totalTeams: 0,
     totalPlayers: 0,
     upcomingSessions: [],
@@ -58,6 +59,7 @@ const CoachDashboard = () => {
 
         setDashboardData({
           coachName: storedCoachName || '',
+          coachId: coachId,
           ...response.data,
           teams: response.data.teams || []
         });
@@ -411,7 +413,9 @@ const CoachDashboard = () => {
 
       <div className="header">
         <h1 className="welcome-text">Welcome back, Coach</h1>
-        <h2 className="coach-name">{dashboardData.coachName}</h2>
+        <h2 className="coach-name">{dashboardData.coachName}
+          <div className="coach-id">Coach ID: {dashboardData.coachId}</div>
+        </h2>
       </div>
 
       <div className="stats-container">
